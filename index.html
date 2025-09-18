@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lời cảm ơn gửi chị Hương Giang (HSA)</title>
+  <style>
+    :root{
+      --pink-50:#fff1f7; --pink-100:#ffd8e9; --pink-200:#ffb3d2; --pink-300:#ff8cba;
+      --pink-400:#ff5fa1; --pink-500:#ff2f88; --pink-600:#e01f77; --pink-700:#b4145f;
+      --white:#fff; --shadow:0 10px 30px rgba(0,0,0,.15);
+    }
+
+    html, body { height: 100%; }
+    body {
+      margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: #3a2a2f;
+      background: radial-gradient(1200px 800px at 20% 10%, var(--pink-100), var(--pink-300)) , linear-gradient(180deg, var(--pink-200), var(--pink-500));
+      overflow: hidden;
+    }
+
+    /* Floating heart background */
+    .hearts-area{ position: fixed; inset: 0; overflow: hidden; z-index: 0; pointer-events: none; }
+    .heart{
+      position: absolute; width: 18px; height: 18px; opacity: .8; transform: rotate(45deg);
+      background: var(--white);
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,.1));
+      animation: floatUp linear forwards;
+    }
+    .heart::before, .heart::after{
+      content:""; position:absolute; width:100%; height:100%; background:inherit; border-radius:50%;
+    }
+    .heart::before{ left:-50%; }
+    .heart::after{ top:-50%; }
+    @keyframes floatUp{
+      0%{ transform: translateY(0) rotate(45deg) scale(0.9); opacity:.0; }
+      10%{ opacity:.7; }
+      100%{ transform: translateY(-120vh) rotate(45deg) scale(1.2); opacity:0; }
+    }
+
+    /* Foreground content */
+    .wrap{
+      position: relative; z-index: 1; height: 100%; display: grid; place-items: center; padding: 24px;
+    }
+    .card{
+      width: min(880px, 92vw); background: rgba(255,255,255,.85); backdrop-filter: blur(6px);
+      border-radius: 24px; box-shadow: var(--shadow); padding: 28px 24px 22px; border: 1px solid rgba(255,255,255,.7);
+    }
+    .title{ display:flex; align-items:center; gap:12px; margin:0 0 14px; }
+    .title .badge{ background: var(--pink-600); color: var(--white); padding:6px 10px; border-radius:999px; font-size:12px; letter-spacing:.4px; }
+    h1{ margin: 0; font-size: clamp(20px, 3.5vw, 30px); font-weight: 800; color:#8a0f4e; }
+
+    .question{
+      display:flex; align-items:center; gap:10px; border:1.5px solid #ffd2e8; background: var(--pink-50);
+      padding: 14px 16px; border-radius: 14px; margin: 12px 0 18px;
+    }
+    .question input{ flex:1; border:none; background:transparent; outline:none; font-size:16px; }
+    .question .qmark{ font-weight: 800; color: #cc166d; }
+
+    .buttons{ display:flex; gap:12px; flex-wrap: wrap; margin-top:12px; }
+    button{
+      border: none; cursor: pointer; padding: 12px 18px; border-radius: 999px; font-weight: 700; font-size: 15px; transition: transform .12s ease, box-shadow .12s ease, background .2s ease; 
+    }
+    .agree{
+      background: linear-gradient(180deg, var(--pink-400), var(--pink-600)); color: var(--white); box-shadow: 0 6px 18px rgba(255,47,136,.35);
+    }
+    .agree:hover{ transform: translateY(-1px); box-shadow: 0 10px 24px rgba(255,47,136,.45); }
+
+    .escape{ background: var(--white); color:#b4145f; border:1.5px solid #ffc2df; box-shadow: 0 6px 16px rgba(0,0,0,.06); position: relative; }
+    .escape:active{ transform: scale(.98); }
+
+    .hint{ font-size: 12px; color:#8a0f4e; opacity:.8; margin-top:8px; }
+
+    /* Modal */
+    .modal-backdrop{ position:fixed; inset:0; background: rgba(0,0,0,.28); display:none; align-items:center; justify-content:center; z-index: 10; }
+    .modal{ width:min(640px, 92vw); background: #fff; border-radius: 20px; padding: 24px; box-shadow: var(--shadow); border: 1px solid #ffe0f0; text-align:center; }
+    .modal h2{ margin: 0 0 8px; color:#a10d5b; font-size: clamp(18px, 3.2vw, 26px); }
+    .modal p{ margin: 8px 0; line-height: 1.55; }
+    .modal .ok{ margin-top: 12px; background: var(--pink-600); color:#fff; }
+    .modal .ok:hover{ filter: brightness(1.05); }
+
+    /* Footer small note */
+    .footer{ margin-top: 12px; font-size:12px; color:#7a2a4d; opacity:.8; text-align:center; }
+
+    /* Safe area for moving button */
+    .playground{ position: relative; }
+  </style>
+</head>
+<body>
+  <div class="hearts-area" id="hearts"></div>
+
+  <main class="wrap">
+    <section class="card playground" id="playground">
+      <div class="title">
+        <span class="badge">THANK YOU</span>
+        <h1>Lời cảm ơn gửi Leader <span style="white-space:nowrap">Hương Giang</span> – HSA</h1>
+      </div>
+
+      <div class="question" aria-label="Câu hỏi">
+        <span class="qmark">❥</span>
+        <input type="text" value="Chị có chấp nhận lời cảm ơn của Hạ Hoàng không ạ?" aria-label="Câu hỏi cảm ơn" />
+      </div>
+
+      <div class="buttons">
+        <button class="agree" id="agreeBtn" aria-label="Đồng ý">Đồng ý ✓</button>
+        <button class="escape" id="escapeBtn" aria-label="Chưa thỏa mãn">Chưa thỏa mãn…</button>
+      </div>
+
+      <div class="hint">(Thử bắt nút “Chưa thỏa mãn”… nếu bắt được là a tặng e thêm 1 hộp kẹo 😉)</div>
+
+      <div class="footer">NHH 💗</div>
+    </section>
+  </main>
+
+  <!-- Modal -->
+  <div class="modal-backdrop" id="backdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <h2 id="modalTitle"> Giang ơi, cảm ơn Giang rất nhiều! 🌸</h2>
+      <p>
+        NHH thật sự trân trọng sự dẫn dắt tận tâm, tinh tế và luôn trao cơ hội phát triển của Leader HuongGiang.
+        Nhờ HG mà team luôn giữ được tinh thần tích cực, tốc độ và chất lượng.  
+      </p>
+      <p><strong>Chúc HG luôn rực rỡ, nhiều sức khỏe, thăng tiến mạnh mẽ và mãi truyền cảm hứng cho TEAM 2 nhaaa!</strong> 💖</p>
+      <button class="ok" id="okBtn">Đã nhận ❤️</button>
+    </div>
+  </div>
+
+  <script>
+    // --- Floating hearts generator ---
+    const heartsArea = document.getElementById('hearts');
+    function spawnHeart(){
+      const h = document.createElement('span');
+      h.className = 'heart';
+      const size = Math.random()*18 + 10; // 10 - 28
+      h.style.width = size + 'px';
+      h.style.height = size + 'px';
+      h.style.left = Math.random()*100 + 'vw';
+      h.style.bottom = '-40px';
+      const dur = 6 + Math.random()*8; // 6 - 14s
+      const delay = Math.random()*2; // 0-2s
+      h.style.animationDuration = dur + 's';
+      h.style.animationDelay = delay + 's';
+      h.style.opacity = (0.5 + Math.random()*0.5).toFixed(2);
+      heartsArea.appendChild(h);
+      setTimeout(()=>h.remove(), (dur+delay)*1000 + 100);
+    }
+    // initial burst
+    for(let i=0;i<22;i++) setTimeout(spawnHeart, i*180);
+    // continuous spawn
+    setInterval(()=>{ for(let i=0;i<2;i++) spawnHeart(); }, 1200);
+
+    // --- Escape button dodging logic ---
+    const escapeBtn = document.getElementById('escapeBtn');
+    const playground = document.getElementById('playground');
+
+    function moveEscape(x, y){
+      const rect = playground.getBoundingClientRect();
+      const btnRect = escapeBtn.getBoundingClientRect();
+
+      // Vector away from cursor
+      const centerX = btnRect.left + btnRect.width/2;
+      const centerY = btnRect.top + btnRect.height/2;
+      const dx = centerX - x; const dy = centerY - y;
+      let angle = Math.atan2(dy, dx);
+
+      const jump = 160 + Math.random()*120; // pixels
+      let newLeft = (btnRect.left - rect.left) + Math.cos(angle)*jump + (Math.random()*40-20);
+      let newTop  = (btnRect.top  - rect.top ) + Math.sin(angle)*jump + (Math.random()*40-20);
+
+      // Keep inside playground (padding 10)
+      const pad = 10;
+      newLeft = Math.min(Math.max(pad, newLeft), rect.width - btnRect.width - pad);
+      newTop  = Math.min(Math.max(pad, newTop ), rect.height - btnRect.height - pad);
+
+      escapeBtn.style.position = 'absolute';
+      escapeBtn.style.left = newLeft + 'px';
+      escapeBtn.style.top  = newTop  + 'px';
+    }
+
+    let dodgeRadius = 140; // distance to trigger dodge
+    let cooling = false;
+    document.addEventListener('mousemove', (e)=>{
+      const btnRect = escapeBtn.getBoundingClientRect();
+      const distX = Math.max(btnRect.left - e.clientX, 0, e.clientX - btnRect.right);
+      const distY = Math.max(btnRect.top - e.clientY, 0, e.clientY - btnRect.bottom);
+      const distance = Math.hypot(distX, distY);
+      if(distance < dodgeRadius && !cooling){
+        moveEscape(e.clientX, e.clientY);
+        cooling = true; setTimeout(()=>cooling=false, 80);
+      }
+    });
+
+    // Extra anti-click: if somehow hovered, jump instantly
+    escapeBtn.addEventListener('mouseenter', (e)=>{
+      moveEscape(e.clientX, e.clientY);
+    });
+
+    // --- Agree button opens modal ---
+    const agreeBtn = document.getElementById('agreeBtn');
+    const backdrop = document.getElementById('backdrop');
+    const okBtn = document.getElementById('okBtn');
+
+    function openModal(){
+      backdrop.style.display = 'flex';
+      // celebratory burst of hearts
+      for(let i=0;i<14;i++) setTimeout(spawnHeart, i*90);
+    }
+    function closeModal(){ backdrop.style.display = 'none'; }
+
+    agreeBtn.addEventListener('click', openModal);
+    okBtn.addEventListener('click', closeModal);
+    backdrop.addEventListener('click', (e)=>{ if(e.target === backdrop) closeModal(); });
+
+    // Touch support: make the escape button dodge around finger taps
+    escapeBtn.addEventListener('touchstart', (e)=>{
+      const t = e.touches[0]; moveEscape(t.clientX, t.clientY); e.preventDefault();
+    }, {passive:false});
+  </script>
+</body>
+</html>
